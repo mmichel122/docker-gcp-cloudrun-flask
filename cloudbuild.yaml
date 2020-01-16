@@ -1,0 +1,14 @@
+steps:
+# Build the Docker image:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/cost-app:v1', '.']
+
+# Push the image to GCP Container Registry:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/cost-app:v1']
+
+# Deploy flask login app image to Cloud Run:
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['beta', 'run', 'deploy', 'flask-cost-app', '--image', 'gcr.io/$PROJECT_ID/cost-app:v1', '--region', 'europe-west1', '--platform', 'managed', --timeout, '900', '--allow-unauthenticated']
+images:
+- gcr.io/$PROJECT_ID/cost-app:v1
