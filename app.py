@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import render_template
 import os
 
 # Import local modules
@@ -9,7 +10,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def home():
-        return 'ERROR: Wrong Address...'
+        return render_template('error.html')
 
 @app.route('/f1', methods=['GET'])
 def f1():
